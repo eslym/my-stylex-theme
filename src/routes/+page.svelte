@@ -30,7 +30,7 @@
     import stylex from '@stylexjs/stylex';
     import { radixColors } from '$lib/styles/theme/radix.stylex';
     import { baseValue } from '$lib/styles/values.stylex';
-    import { switches } from '$lib/styles/checkboxes';
+    import { checkbox, switches } from '$lib/styles/checkboxes';
 
     let type: 'solid' | 'outline' | 'ghost' | 'minimal' = $state('solid');
     let theme: Theme<any> | undefined = $state(undefined);
@@ -89,6 +89,17 @@
     {/each}
     {#each [styles.schemeLight, styles.schemeDark] as scheme}
         <div stylex-attrs={[scheme, styles.controls]}>
+            <input
+                type="checkbox"
+                {disabled}
+                stylex-attrs={[theme, checkbox.styles, checkbox.lg]}
+            />
+            <input type="checkbox" {disabled} stylex-attrs={[theme, checkbox.styles]} />
+            <input
+                type="checkbox"
+                {disabled}
+                stylex-attrs={[theme, checkbox.styles, checkbox.sm]}
+            />
             <input
                 type="checkbox"
                 {disabled}
