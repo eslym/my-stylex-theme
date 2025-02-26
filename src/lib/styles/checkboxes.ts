@@ -2,6 +2,7 @@ import { radixColors } from '$lib/styles/theme/radix.stylex';
 import { baseValue } from '$lib/styles/values.stylex';
 import stylex from '@stylexjs/stylex';
 
+const where_checked = ':where(:checked, [aria-checked=true])';
 const where_disabled = ':where(:disabled, [aria-disabled=true])';
 
 export const switches = stylex.create({
@@ -21,7 +22,7 @@ export const switches = stylex.create({
             transitionDuration: baseValue.transitionDuration,
             transitionTimingFunction: baseValue.transitionEasing
         },
-        ':checked': {
+        [where_checked]: {
             '::before': {
                 transform: `translateX(calc(${baseValue.lengthRelative} * 1.5))`
             }
@@ -45,7 +46,7 @@ export const switches = stylex.create({
         borderRadius: '9999px',
         backgroundColor: {
             default: radixColors.surface6,
-            ':checked': radixColors.accentLight9
+            [where_checked]: radixColors.accentLight9
         },
         boxShadow: `0 calc(${baseValue.lengthRelative} * 0.5) calc(${baseValue.lengthRelative} * 0.5) 0 ${radixColors.blackA5} inset`,
         transitionProperty: 'background-color, color, outline-color, outline-width',
@@ -70,7 +71,7 @@ export const switches = stylex.create({
             height: `calc(${baseValue.lengthRelative} * 3)`,
             transform: `translateX(calc(${baseValue.lengthRelative} * -1))`
         },
-        ':checked': {
+        [where_checked]: {
             '::before': {
                 transform: `translateX(${baseValue.lengthRelative})`
             }
@@ -84,7 +85,7 @@ export const switches = stylex.create({
             height: `calc(${baseValue.lengthRelative} * 3)`,
             transform: `translateX(calc(${baseValue.lengthRelative} * -1))`
         },
-        ':checked': {
+        [where_checked]: {
             '::before': {
                 transform: `translateX(calc(${baseValue.lengthRelative}))`
             }
@@ -98,7 +99,7 @@ export const switches = stylex.create({
             height: `calc(${baseValue.lengthRelative} * 5)`,
             transform: `translateX(calc(${baseValue.lengthRelative} * -2))`
         },
-        ':checked': {
+        [where_checked]: {
             '::before': {
                 transform: `translateX(calc(${baseValue.lengthRelative} * 2))`
             }
@@ -128,7 +129,7 @@ export const checkbox = stylex.create({
             transitionDuration: baseValue.transitionDuration,
             transitionTimingFunction: baseValue.transitionEasing
         },
-        ':checked': {
+        [where_checked]: {
             '::before': {
                 borderWidth: `calc(${baseValue.lengthRelative} * 0.5)`,
                 transform: 'scale(1)'
@@ -155,11 +156,11 @@ export const checkbox = stylex.create({
         borderColor: radixColors.accent7,
         borderWidth: {
             default: `calc(${baseValue.lengthFixed} * 0.5)`,
-            ':checked': 0
+            [where_checked]: 0
         },
         backgroundColor: {
             default: radixColors.accentA2,
-            ':checked': radixColors.accentLight9
+            [where_checked]: radixColors.accentLight9
         },
         cursor: 'pointer',
         userSelect: 'none',
@@ -169,7 +170,7 @@ export const checkbox = stylex.create({
         transitionTimingFunction: baseValue.transitionEasing,
         boxShadow: {
             default: `0 0 0 0 ${radixColors.blackA3}`,
-            ':checked': `0 calc(${baseValue.lengthRelative} * 0.5) calc(${baseValue.lengthRelative} * 1) 0 ${radixColors.blackA3}`
+            [where_checked]: `0 calc(${baseValue.lengthRelative} * 0.5) calc(${baseValue.lengthRelative} * 1) 0 ${radixColors.blackA3}`
         },
         opacity: {
             default: 1,
