@@ -7,12 +7,15 @@ const supports_oklch = '@supports (color: oklch(1 0 0))';
 
 const styles = stylex.create({
     base: {
-        outlineColor: radixColors.accent11,
+        outlineColor: radixColors.accentA8,
         outlineWidth: {
             default: 0,
-            ':focus-visible': `calc(${baseValue.lengthFixed} * 0.75)`
+            ':focus-visible': `calc(${baseValue.lengthFixed} * 0.5)`
         },
-        outlineOffset: 0,
+        outlineOffset: {
+            default: 0,
+            ':focus-visible': '1px'
+        },
         outlineStyle: 'solid',
         borderRadius: baseValue.lengthFixed,
         fontSize: baseValue.fontSize,
@@ -52,7 +55,7 @@ const styles = stylex.create({
             ':hover': {
                 default: `hsl(from ${radixColors.accentLight9} h s calc(l * 1.15))`,
                 [supports_oklch]: `oklch(from ${radixColors.accentLight9} calc(l * 1.15) c h)`
-            },
+            }
         },
         color: radixColors.surfaceDark12
     },
