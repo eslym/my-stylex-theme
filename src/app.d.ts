@@ -1,4 +1,9 @@
-import type { CompiledStyles, StyleXArray, InlineStyles } from '@stylexjs/stylex/lib/StyleXTypes';
+import type {
+    CompiledStyles,
+    StyleXArray,
+    InlineStyles,
+    UserAuthoredStyles
+} from '@stylexjs/stylex/lib/StyleXTypes';
 
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
@@ -18,7 +23,13 @@ declare global {
 
 declare module 'svelte/elements' {
     export interface HTMLAttributes<T> {
-        stylex?: StyleXAttr | readonly StyleXAttr[];
+        ['stylex-attrs']?: StyleXAttr | readonly StyleXAttr[];
+        ['stylex-create']?: UserAuthoredStyles; // if you need
+    }
+
+    export interface SVGAttributes<T> {
+        ['stylex-attrs']?: StyleXAttr | readonly StyleXAttr[];
+        ['stylex-create']?: UserAuthoredStyles; // if you need
     }
 }
 

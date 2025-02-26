@@ -1,13 +1,29 @@
+<script lang="ts" module>
+    export const styles = stylex.create({
+        schemeLight: {
+            colorScheme: 'light'
+        },
+        schemeDark: {
+            colorScheme: 'dark'
+        },
+        schemeAuto: {
+            colorScheme: 'light dark'
+        }
+    });
+</script>
+
 <script lang="ts">
     import { button } from '$lib/styles/buttons';
     import type { Theme } from '@stylexjs/stylex';
-    import { styles } from './page-styles';
     import { accentPrimary } from '$lib/styles/theme/accents/primary.stylex';
     import { accentSecondary } from '$lib/styles/theme/accents/secondary.stylex';
     import { accentTertiary } from '$lib/styles/theme/accents/tertiary.stylex';
     import { accentPositive } from '$lib/styles/theme/accents/positive.stylex';
     import { accentNegative } from '$lib/styles/theme/accents/negative.stylex';
     import { accentWarning } from '$lib/styles/theme/accents/warning.stylex';
+    import stylex from '@stylexjs/stylex';
+    import { radixColors } from '$lib/styles/theme/radix.stylex';
+    import { baseValue } from '$lib/styles/values.stylex';
 
     let type: 'solid' | 'outline' | 'ghost' | 'minimal' = $state('solid');
     let theme: Theme<any> | undefined = $state(undefined);
@@ -15,16 +31,36 @@
 </script>
 
 {#snippet buttons(type: StyleXAttr, scheme: StyleXAttr)}
-    <div stylex={[scheme, styles.buttons]}>
-        <button {disabled} stylex={[theme, type, button.size.xl]}>CLICK ME</button>
-        <button {disabled} stylex={[theme, type, button.size.lg]}>CLICK ME</button>
-        <button {disabled} stylex={[theme, type]}>CLICK ME</button>
-        <button {disabled} stylex={[theme, type, button.size.sm]}>CLICK ME</button>
-        <button {disabled} stylex={[theme, type, button.size.xs]}>CLICK ME</button>
+    <div
+        stylex-attrs={[scheme]}
+        stylex-create={{
+            padding: `calc(${baseValue.lengthFixed} * 4)`,
+            backgroundColor: radixColors.surface1,
+            display: 'flex',
+            flexDirection: 'row',
+            gap: `calc(${baseValue.lengthFixed} * 2)`,
+            alignItems: 'center'
+        }}
+    >
+        <button {disabled} stylex-attrs={[theme, type, button.size.xl]}>CLICK ME</button>
+        <button {disabled} stylex-attrs={[theme, type, button.size.lg]}>CLICK ME</button>
+        <button {disabled} stylex-attrs={[theme, type]}>CLICK ME</button>
+        <button {disabled} stylex-attrs={[theme, type, button.size.sm]}>CLICK ME</button>
+        <button {disabled} stylex-attrs={[theme, type, button.size.xs]}>CLICK ME</button>
     </div>
 {/snippet}
 
-<div stylex={styles.container}>
+<div
+    stylex-create={{
+        width: '100vw',
+        height: stylex.firstThatWorks('100dvh', '100vh'),
+        backgroundColor: radixColors.surface2,
+        padding: `calc(${baseValue.lengthFixed} * 4)`,
+        gap: `calc(${baseValue.lengthFixed} * 4)`,
+        display: 'flex',
+        flexDirection: 'column'
+    }}
+>
     <div>
         <select bind:value={theme}>
             <option value={undefined}>Default</option>

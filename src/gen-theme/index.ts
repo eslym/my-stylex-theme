@@ -9,6 +9,6 @@ await generate_codes('src/lib/styles/theme', {
         tertiary: ['#4b5563', '#9ca3af'],
         positive: ['#059669', '#34d399'],
         negative: ['#e11d48', '#fb7185'],
-        warning: ['#ea580c', '#fbbf24']
+        warning: ['#ca8a04', '#facc15']
     }
 });
