@@ -119,9 +119,9 @@ export const checkbox = stylex.create({
             borderRightStyle: 'none',
             borderColor: radixColors.whiteA12,
             borderWidth: 0,
-            marginTop: `calc(${baseValue.lengthRelative} * -0.5)`,
-            width: `calc(${baseValue.lengthRelative} * 3)`,
-            height: `calc(${baseValue.lengthRelative} * 1.5)`,
+            marginTop: '-10%',
+            width: '50%',
+            height: '25%',
             origin: 'center',
             rotate: '-45deg',
             transform: 'scale(0)',
@@ -149,17 +149,20 @@ export const checkbox = stylex.create({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: baseValue.lengthRelative,
+        borderRadius: `calc(${baseValue.lengthRelative} * 0.75)`,
         width: `calc(${baseValue.lengthRelative} * 5)`,
         height: `calc(${baseValue.lengthRelative} * 5)`,
         borderStyle: 'solid',
-        borderColor: radixColors.accent7,
+        borderColor: {
+            default: radixColors.surface9,
+            ':focus': radixColors.accent9
+        },
         borderWidth: {
-            default: `calc(${baseValue.lengthFixed} * 0.5)`,
+            default: `calc(${baseValue.lengthFixed} * 0.25)`,
             [where_checked]: 0
         },
         backgroundColor: {
-            default: radixColors.accentA2,
+            default: 'transparent',
             [where_checked]: radixColors.accentLight9
         },
         cursor: 'pointer',
@@ -184,12 +187,12 @@ export const checkbox = stylex.create({
     sm: {
         width: `calc(${baseValue.lengthRelative} * 4)`,
         height: `calc(${baseValue.lengthRelative} * 4)`,
-        borderRadius: `calc(${baseValue.lengthRelative} * 0.25)`
+        borderRadius: `calc(${baseValue.lengthRelative} * 0.5)`
     },
     md: {
         width: `calc(${baseValue.lengthRelative} * 5)`,
         height: `calc(${baseValue.lengthRelative} * 5)`,
-        borderRadius: `calc(${baseValue.lengthRelative} * 0.5)`
+        borderRadius: `calc(${baseValue.lengthRelative} * 0.75)`
     },
     lg: {
         width: `calc(${baseValue.lengthRelative} * 6)`,

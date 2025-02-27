@@ -20,7 +20,6 @@
 
 <script lang="ts">
     import { button } from '$lib/styles/buttons';
-    import type { Theme } from '@stylexjs/stylex';
     import { accentPrimary } from '$lib/styles/theme/accents/primary.stylex';
     import { accentSecondary } from '$lib/styles/theme/accents/secondary.stylex';
     import { accentTertiary } from '$lib/styles/theme/accents/tertiary.stylex';
@@ -31,10 +30,11 @@
     import { radixColors } from '$lib/styles/theme/radix.stylex';
     import { baseValue } from '$lib/styles/values.stylex';
     import { checkbox, switches } from '$lib/styles/checkboxes';
+    import { config } from '$lib/states.svelte';
 
-    let type: 'solid' | 'outline' | 'ghost' | 'minimal' = $state('solid');
-    let theme: Theme<any> | undefined = $state(undefined);
-    let disabled = $state(false);
+    let theme = $derived(config.theme);
+    let type = $derived(config.buttonType);
+    let disabled = $derived(config.disabled);
 </script>
 
 <div
@@ -50,8 +50,8 @@
     }}
 >
     <div>
-        <select bind:value={theme}>
-            <option value={undefined}>Default</option>
+        <select bind:value={config.theme}>
+            <option value={null}>Default</option>
             <option value={accentPrimary}>Primary</option>
             <option value={accentSecondary}>Secondary</option>
             <option value={accentTertiary}>Tertiary</option>
@@ -59,14 +59,18 @@
             <option value={accentNegative}>Negative</option>
             <option value={accentWarning}>Warning</option>
         </select>
-        <select bind:value={type}>
+        <select bind:value={config.buttonType}>
             <option value="solid">Solid</option>
             <option value="outline">Outline</option>
             <option value="ghost">Ghost</option>
             <option value="minimal">Minimal</option>
         </select>
         <label>
-            <input type="checkbox" bind:checked={disabled} />
+            <input
+                stylex-attrs={[theme, switches.styles]}
+                type="checkbox"
+                bind:checked={config.disabled}
+            />
             Disabled
         </label>
     </div>
@@ -91,23 +95,37 @@
         <div stylex-attrs={[scheme, styles.controls]}>
             <input
                 type="checkbox"
+                bind:checked={config.checked}
                 {disabled}
                 stylex-attrs={[theme, checkbox.styles, checkbox.lg]}
             />
-            <input type="checkbox" {disabled} stylex-attrs={[theme, checkbox.styles]} />
             <input
                 type="checkbox"
+                bind:checked={config.checked}
+                {disabled}
+                stylex-attrs={[theme, checkbox.styles]}
+            />
+            <input
+                type="checkbox"
+                bind:checked={config.checked}
                 {disabled}
                 stylex-attrs={[theme, checkbox.styles, checkbox.sm]}
             />
             <input
                 type="checkbox"
+                bind:checked={config.checked}
                 {disabled}
                 stylex-attrs={[theme, switches.styles, switches.lg]}
             />
-            <input type="checkbox" {disabled} stylex-attrs={[theme, switches.styles]} />
             <input
                 type="checkbox"
+                bind:checked={config.checked}
+                {disabled}
+                stylex-attrs={[theme, switches.styles]}
+            />
+            <input
+                type="checkbox"
+                bind:checked={config.checked}
                 {disabled}
                 stylex-attrs={[theme, switches.styles, switches.sm]}
             />
