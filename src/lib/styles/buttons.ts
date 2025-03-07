@@ -1,4 +1,4 @@
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 import { radixColors } from './theme/radix.stylex';
 import { baseValue } from './values.stylex';
 

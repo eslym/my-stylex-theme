@@ -1,6 +1,6 @@
 import { radixColors } from '$lib/styles/theme/radix.stylex';
 import { baseValue } from '$lib/styles/values.stylex';
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 
 const where_checked = ':where(:checked, [aria-checked=true])';
 const where_disabled = ':where(:disabled, [aria-disabled=true])';
@@ -16,7 +16,7 @@ export const switches = stylex.create({
             width: `calc(${baseValue.lengthRelative} * 4)`,
             height: `calc(${baseValue.lengthRelative} * 4)`,
             border: `1px solid ${radixColors.blackA4}`,
-            origin: 'center',
+            transformOrigin: 'center',
             transform: `translateX(calc(${baseValue.lengthRelative} * -1.5))`,
             transitionProperty: 'transform',
             transitionDuration: baseValue.transitionDuration,
@@ -122,7 +122,7 @@ export const checkbox = stylex.create({
             marginTop: '-10%',
             width: '50%',
             height: '25%',
-            origin: 'center',
+            transformOrigin: 'center',
             rotate: '-45deg',
             transform: 'scale(0)',
             transitionProperty: 'transform border-width',

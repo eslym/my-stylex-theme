@@ -26,7 +26,7 @@
     import { accentPositive } from '$lib/styles/theme/accents/positive.stylex';
     import { accentNegative } from '$lib/styles/theme/accents/negative.stylex';
     import { accentWarning } from '$lib/styles/theme/accents/warning.stylex';
-    import stylex from '@stylexjs/stylex';
+    import * as stylex from '@stylexjs/stylex';
     import { radixColors } from '$lib/styles/theme/radix.stylex';
     import { baseValue } from '$lib/styles/values.stylex';
     import { checkbox, switches } from '$lib/styles/checkboxes';

@@ -1,4 +1,5 @@
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
+import { defaultColors } from './colors/default.stylex';
 
 const supports_p3 = '@supports (color: color(display-p3 1 0 0))';
 const supports_oklch = '@supports (color: oklch(1 0 0))';
@@ -29,31 +30,12 @@ export const radixColors = stylex.defineVars({
         default: '#000be507',
         [supports_p3]: 'color(display-p3 0 0.0431 0.9765 / 0.021)'
     },
-    accent1: {
-        default: 'light-dark(#f6f7f8, #080a0d)',
-        [supports_oklch]: 'light-dark(oklch(97.6% 0.0023 257.3), oklch(14.5% 0.0071 256.8))'
-    },
-    accentLight1: {
-        default: '#f6f7f8',
-        [supports_oklch]: 'oklch(97.6% 0.0023 257.3)'
-    },
-    accentDark1: {
-        default: '#080a0d',
-        [supports_oklch]: 'oklch(14.5% 0.0071 256.8)'
-    },
-    accentA1: {
-        default: 'light-dark(#2f629505, #000aca04)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.2471 0.4902 / 0.016), color(display-p3 0 0.0431 0.9451 / 0.013))'
-    },
-    accentLightA1: {
-        default: '#2f629505',
-        [supports_p3]: 'color(display-p3 0 0.2471 0.4902 / 0.016)'
-    },
-    accentDarkA1: {
-        default: '#000aca04',
-        [supports_p3]: 'color(display-p3 0 0.0431 0.9451 / 0.013)'
-    },
+    accent1: `light-dark(${defaultColors.light1}, ${defaultColors.dark1})`,
+    accentLight1: defaultColors.light1,
+    accentDark1: defaultColors.dark1,
+    accentA1: `light-dark(${defaultColors.lightA1}, ${defaultColors.darkA1})`,
+    accentLightA1: defaultColors.lightA1,
+    accentDarkA1: defaultColors.darkA1,
     blackA1: {
         default: 'rgba(0, 0, 0, 0.05)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.05)'
@@ -87,31 +69,12 @@ export const radixColors = stylex.defineVars({
         default: '#73adfe16',
         [supports_p3]: 'color(display-p3 0.5176 0.7098 0.9961 / 0.082)'
     },
-    accent2: {
-        default: 'light-dark(#f1f3f6, #15181b)',
-        [supports_oklch]: 'light-dark(oklch(96.4% 0.0045 257.3), oklch(20.7% 0.0078 256.8))'
-    },
-    accentLight2: {
-        default: '#f1f3f6',
-        [supports_oklch]: 'oklch(96.4% 0.0045 257.3)'
-    },
-    accentDark2: {
-        default: '#15181b',
-        [supports_oklch]: 'oklch(20.7% 0.0078 256.8)'
-    },
-    accentA2: {
-        default: 'light-dark(#1548940a, #a6d1fb12)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.2196 0.5451 / 0.036), color(display-p3 0.7137 0.8235 0.9922 / 0.07))'
-    },
-    accentLightA2: {
-        default: '#1548940a',
-        [supports_p3]: 'color(display-p3 0 0.2196 0.5451 / 0.036)'
-    },
-    accentDarkA2: {
-        default: '#a6d1fb12',
-        [supports_p3]: 'color(display-p3 0.7137 0.8235 0.9922 / 0.07)'
-    },
+    accent2: `light-dark(${defaultColors.light2}, ${defaultColors.dark2})`,
+    accentLight2: defaultColors.light2,
+    accentDark2: defaultColors.dark2,
+    accentA2: `light-dark(${defaultColors.lightA2}, ${defaultColors.darkA2})`,
+    accentLightA2: defaultColors.lightA2,
+    accentDarkA2: defaultColors.darkA2,
     blackA2: {
         default: 'rgba(0, 0, 0, 0.1)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.1)'
@@ -145,31 +108,12 @@ export const radixColors = stylex.defineVars({
         default: '#83b4fb24',
         [supports_p3]: 'color(display-p3 0.5647 0.7373 1 / 0.135)'
     },
-    accent3: {
-        default: 'light-dark(#e7ebf1, #1e242b)',
-        [supports_oklch]: 'light-dark(oklch(93.9% 0.0099 257.3), oklch(25.7% 0.0163 256.8))'
-    },
-    accentLight3: {
-        default: '#e7ebf1',
-        [supports_oklch]: 'oklch(93.9% 0.0099 257.3)'
-    },
-    accentDark3: {
-        default: '#1e242b',
-        [supports_oklch]: 'oklch(25.7% 0.0163 256.8)'
-    },
-    accentA3: {
-        default: 'light-dark(#083b8814, #9cc8fb23)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.1647 0.4392 / 0.072), color(display-p3 0.6706 0.8196 1 / 0.131))'
-    },
-    accentLightA3: {
-        default: '#083b8814',
-        [supports_p3]: 'color(display-p3 0 0.1647 0.4392 / 0.072)'
-    },
-    accentDarkA3: {
-        default: '#9cc8fb23',
-        [supports_p3]: 'color(display-p3 0.6706 0.8196 1 / 0.131)'
-    },
+    accent3: `light-dark(${defaultColors.light3}, ${defaultColors.dark3})`,
+    accentLight3: defaultColors.light3,
+    accentDark3: defaultColors.dark3,
+    accentA3: `light-dark(${defaultColors.lightA3}, ${defaultColors.darkA3})`,
+    accentLightA3: defaultColors.lightA3,
+    accentDarkA3: defaultColors.darkA3,
     blackA3: {
         default: 'rgba(0, 0, 0, 0.15)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.15)'
@@ -203,31 +147,12 @@ export const radixColors = stylex.defineVars({
         default: '#82b8ff2f',
         [supports_p3]: 'color(display-p3 0.5647 0.7373 1 / 0.18)'
     },
-    accent4: {
-        default: 'light-dark(#dce3ec, #252c37)',
-        [supports_oklch]: 'light-dark(oklch(91.3% 0.0144 257.3), oklch(29.2% 0.0227 256.8))'
-    },
-    accentLight4: {
-        default: '#dce3ec',
-        [supports_oklch]: 'oklch(91.3% 0.0144 257.3)'
-    },
-    accentDark4: {
-        default: '#252c37',
-        [supports_oklch]: 'oklch(29.2% 0.0227 256.8)'
-    },
-    accentA4: {
-        default: 'light-dark(#043d871f, #9dc3ff2f)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.2039 0.4745 / 0.116), color(display-p3 0.651 0.7804 1 / 0.18))'
-    },
-    accentLightA4: {
-        default: '#043d871f',
-        [supports_p3]: 'color(display-p3 0 0.2039 0.4745 / 0.116)'
-    },
-    accentDarkA4: {
-        default: '#9dc3ff2f',
-        [supports_p3]: 'color(display-p3 0.651 0.7804 1 / 0.18)'
-    },
+    accent4: `light-dark(${defaultColors.light4}, ${defaultColors.dark4})`,
+    accentLight4: defaultColors.light4,
+    accentDark4: defaultColors.dark4,
+    accentA4: `light-dark(${defaultColors.lightA4}, ${defaultColors.darkA4})`,
+    accentLightA4: defaultColors.lightA4,
+    accentDarkA4: defaultColors.darkA4,
     blackA4: {
         default: 'rgba(0, 0, 0, 0.2)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.2)'
@@ -261,31 +186,12 @@ export const radixColors = stylex.defineVars({
         default: '#86b6fc3a',
         [supports_p3]: 'color(display-p3 0.5725 0.7333 1 / 0.221)'
     },
-    accent5: {
-        default: 'light-dark(#d2dae6, #2c3542)',
-        [supports_oklch]: 'light-dark(oklch(88.7% 0.0186 257.3), oklch(32.7% 0.0254 256.8))'
-    },
-    accentLight5: {
-        default: '#d2dae6',
-        [supports_oklch]: 'oklch(88.7% 0.0186 257.3)'
-    },
-    accentDark5: {
-        default: '#2c3542',
-        [supports_oklch]: 'oklch(32.7% 0.0254 256.8)'
-    },
-    accentA5: {
-        default: 'light-dark(#02337e29, #9dc4fc3b)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.1765 0.4549 / 0.156), color(display-p3 0.6667 0.7922 1 / 0.225))'
-    },
-    accentLightA5: {
-        default: '#02337e29',
-        [supports_p3]: 'color(display-p3 0 0.1765 0.4549 / 0.156)'
-    },
-    accentDarkA5: {
-        default: '#9dc4fc3b',
-        [supports_p3]: 'color(display-p3 0.6667 0.7922 1 / 0.225)'
-    },
+    accent5: `light-dark(${defaultColors.light5}, ${defaultColors.dark5})`,
+    accentLight5: defaultColors.light5,
+    accentDark5: defaultColors.dark5,
+    accentA5: `light-dark(${defaultColors.lightA5}, ${defaultColors.darkA5})`,
+    accentLightA5: defaultColors.lightA5,
+    accentDarkA5: defaultColors.darkA5,
     blackA5: {
         default: 'rgba(0, 0, 0, 0.3)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.3)'
@@ -319,31 +225,12 @@ export const radixColors = stylex.defineVars({
         default: '#8ab9ff46',
         [supports_p3]: 'color(display-p3 0.6 0.749 1 / 0.266)'
     },
-    accent6: {
-        default: 'light-dark(#c7d1df, #36404e)',
-        [supports_oklch]: 'light-dark(oklch(85.7% 0.0232 257.3), oklch(36.8% 0.028 256.8))'
-    },
-    accentLight6: {
-        default: '#c7d1df',
-        [supports_oklch]: 'oklch(85.7% 0.0232 257.3)'
-    },
-    accentDark6: {
-        default: '#36404e',
-        [supports_oklch]: 'oklch(36.8% 0.028 256.8)'
-    },
-    accentA6: {
-        default: 'light-dark(#05357935, #a9ccff47)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.1608 0.4235 / 0.196), color(display-p3 0.698 0.8157 1 / 0.274))'
-    },
-    accentLightA6: {
-        default: '#05357935',
-        [supports_p3]: 'color(display-p3 0 0.1608 0.4235 / 0.196)'
-    },
-    accentDarkA6: {
-        default: '#a9ccff47',
-        [supports_p3]: 'color(display-p3 0.698 0.8157 1 / 0.274)'
-    },
+    accent6: `light-dark(${defaultColors.light6}, ${defaultColors.dark6})`,
+    accentLight6: defaultColors.light6,
+    accentDark6: defaultColors.dark6,
+    accentA6: `light-dark(${defaultColors.lightA6}, ${defaultColors.darkA6})`,
+    accentLightA6: defaultColors.lightA6,
+    accentDarkA6: defaultColors.darkA6,
     blackA6: {
         default: 'rgba(0, 0, 0, 0.4)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.4)'
@@ -377,31 +264,12 @@ export const radixColors = stylex.defineVars({
         default: '#8abafe5a',
         [supports_p3]: 'color(display-p3 0.5882 0.7451 1 / 0.343)'
     },
-    accent7: {
-        default: 'light-dark(#b7c3d6, #434f60)',
-        [supports_oklch]: 'light-dark(oklch(81.5% 0.0291 257.3), oklch(42.4% 0.0318 256.8))'
-    },
-    accentLight7: {
-        default: '#b7c3d6',
-        [supports_oklch]: 'oklch(81.5% 0.0291 257.3)'
-    },
-    accentDark7: {
-        default: '#434f60',
-        [supports_oklch]: 'oklch(42.4% 0.0318 256.8)'
-    },
-    accentA7: {
-        default: 'light-dark(#032f7545, #accefe5a)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.1529 0.4078 / 0.26), color(display-p3 0.7137 0.8275 1 / 0.343))'
-    },
-    accentLightA7: {
-        default: '#032f7545',
-        [supports_p3]: 'color(display-p3 0 0.1529 0.4078 / 0.26)'
-    },
-    accentDarkA7: {
-        default: '#accefe5a',
-        [supports_p3]: 'color(display-p3 0.7137 0.8275 1 / 0.343)'
-    },
+    accent7: `light-dark(${defaultColors.light7}, ${defaultColors.dark7})`,
+    accentLight7: defaultColors.light7,
+    accentDark7: defaultColors.dark7,
+    accentA7: `light-dark(${defaultColors.lightA7}, ${defaultColors.darkA7})`,
+    accentLightA7: defaultColors.lightA7,
+    accentDarkA7: defaultColors.darkA7,
     blackA7: {
         default: 'rgba(0, 0, 0, 0.5)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.5)'
@@ -435,31 +303,12 @@ export const radixColors = stylex.defineVars({
         default: '#8dbeff7d',
         [supports_p3]: 'color(display-p3 0.6078 0.7569 1 / 0.478)'
     },
-    accent8: {
-        default: 'light-dark(#9eafc7, #59687d)',
-        [supports_oklch]: 'light-dark(oklch(74.9% 0.0395 257.3), oklch(51.3% 0.0389 256.8))'
-    },
-    accentLight8: {
-        default: '#9eafc7',
-        [supports_oklch]: 'oklch(74.9% 0.0395 257.3)'
-    },
-    accentDark8: {
-        default: '#59687d',
-        [supports_oklch]: 'oklch(51.3% 0.0389 256.8)'
-    },
-    accentA8: {
-        default: 'light-dark(#012f705e, #b2d2ff78)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.1451 0.4 / 0.356), color(display-p3 0.7373 0.8392 1 / 0.462))'
-    },
-    accentLightA8: {
-        default: '#012f705e',
-        [supports_p3]: 'color(display-p3 0 0.1451 0.4 / 0.356)'
-    },
-    accentDarkA8: {
-        default: '#b2d2ff78',
-        [supports_p3]: 'color(display-p3 0.7373 0.8392 1 / 0.462)'
-    },
+    accent8: `light-dark(${defaultColors.light8}, ${defaultColors.dark8})`,
+    accentLight8: defaultColors.light8,
+    accentDark8: defaultColors.dark8,
+    accentA8: `light-dark(${defaultColors.lightA8}, ${defaultColors.darkA8})`,
+    accentLightA8: defaultColors.lightA8,
+    accentDarkA8: defaultColors.darkA8,
     blackA8: {
         default: 'rgba(0, 0, 0, 0.6)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.6)'
@@ -493,31 +342,12 @@ export const radixColors = stylex.defineVars({
         default: '#98c1fe8c',
         [supports_p3]: 'color(display-p3 0.6471 0.7725 1 / 0.535)'
     },
-    accent9: {
-        default: 'light-dark(#45556c, #90a1b9)',
-        [supports_oklch]: 'light-dark(oklch(44.6% 0.043 257.3), oklch(70.4% 0.04 256.8))'
-    },
-    accentLight9: {
-        default: '#45556c',
-        [supports_oklch]: 'oklch(44.6% 0.043 257.3)'
-    },
-    accentDark9: {
-        default: '#90a1b9',
-        [supports_oklch]: 'oklch(70.4% 0.04 256.8)'
-    },
-    accentA9: {
-        default: 'light-dark(#001636b9, #c5dcfeb7)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.0706 0.1882 / 0.712), color(display-p3 0.8 0.8706 1 / 0.707))'
-    },
-    accentLightA9: {
-        default: '#001636b9',
-        [supports_p3]: 'color(display-p3 0 0.0706 0.1882 / 0.712)'
-    },
-    accentDarkA9: {
-        default: '#c5dcfeb7',
-        [supports_p3]: 'color(display-p3 0.8 0.8706 1 / 0.707)'
-    },
+    accent9: `light-dark(${defaultColors.light9}, ${defaultColors.dark9})`,
+    accentLight9: defaultColors.light9,
+    accentDark9: defaultColors.dark9,
+    accentA9: `light-dark(${defaultColors.lightA9}, ${defaultColors.darkA9})`,
+    accentLightA9: defaultColors.lightA9,
+    accentDarkA9: defaultColors.darkA9,
     blackA9: {
         default: 'rgba(0, 0, 0, 0.7)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.7)'
@@ -551,31 +381,12 @@ export const radixColors = stylex.defineVars({
         default: '#a6cbff98',
         [supports_p3]: 'color(display-p3 0.6941 0.8078 1 / 0.584)'
     },
-    accent10: {
-        default: 'light-dark(#37465c, #8596ad)',
-        [supports_oklch]: 'light-dark(oklch(39.1% 0.043 257.3), oklch(66.7% 0.04 256.8))'
-    },
-    accentLight10: {
-        default: '#37465c',
-        [supports_oklch]: 'oklch(39.1% 0.043 257.3)'
-    },
-    accentDark10: {
-        default: '#8596ad',
-        [supports_oklch]: 'oklch(66.7% 0.04 256.8)'
-    },
-    accentA10: {
-        default: 'light-dark(#001330c7, #c3dcffaa)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.0627 0.1647 / 0.768), color(display-p3 0.7922 0.8706 1 / 0.658))'
-    },
-    accentLightA10: {
-        default: '#001330c7',
-        [supports_p3]: 'color(display-p3 0 0.0627 0.1647 / 0.768)'
-    },
-    accentDarkA10: {
-        default: '#c3dcffaa',
-        [supports_p3]: 'color(display-p3 0.7922 0.8706 1 / 0.658)'
-    },
+    accent10: `light-dark(${defaultColors.light10}, ${defaultColors.dark10})`,
+    accentLight10: defaultColors.light10,
+    accentDark10: defaultColors.dark10,
+    accentA10: `light-dark(${defaultColors.lightA10}, ${defaultColors.darkA10})`,
+    accentLightA10: defaultColors.lightA10,
+    accentDarkA10: defaultColors.darkA10,
     blackA10: {
         default: 'rgba(0, 0, 0, 0.8)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.8)'
@@ -609,31 +420,12 @@ export const radixColors = stylex.defineVars({
         default: '#cce1ffcb',
         [supports_p3]: 'color(display-p3 0.8235 0.8863 1 / 0.788)'
     },
-    accent11: {
-        default: 'light-dark(#506178, #a5b7cf)',
-        [supports_oklch]: 'light-dark(oklch(48.7% 0.043 257.3), oklch(77.4% 0.04 256.8))'
-    },
-    accentLight11: {
-        default: '#506178',
-        [supports_oklch]: 'oklch(48.7% 0.043 257.3)'
-    },
-    accentDark11: {
-        default: '#a5b7cf',
-        [supports_oklch]: 'oklch(77.4% 0.04 256.8)'
-    },
-    accentA11: {
-        default: 'light-dark(#011a3cae, #cae0fece)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.0784 0.2078 / 0.668), color(display-p3 0.8196 0.8863 1 / 0.796))'
-    },
-    accentLightA11: {
-        default: '#011a3cae',
-        [supports_p3]: 'color(display-p3 0 0.0784 0.2078 / 0.668)'
-    },
-    accentDarkA11: {
-        default: '#cae0fece',
-        [supports_p3]: 'color(display-p3 0.8196 0.8863 1 / 0.796)'
-    },
+    accent11: `light-dark(${defaultColors.light11}, ${defaultColors.dark11})`,
+    accentLight11: defaultColors.light11,
+    accentDark11: defaultColors.dark11,
+    accentA11: `light-dark(${defaultColors.lightA11}, ${defaultColors.darkA11})`,
+    accentLightA11: defaultColors.lightA11,
+    accentDarkA11: defaultColors.darkA11,
     blackA11: {
         default: 'rgba(0, 0, 0, 0.9)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.9)'
@@ -667,31 +459,12 @@ export const radixColors = stylex.defineVars({
         default: '#f4f8fff5',
         [supports_p3]: 'color(display-p3 0.9647 0.9765 1 / 0.956)'
     },
-    accent12: {
-        default: 'light-dark(#202935, #e2eaf7)',
-        [supports_oklch]: 'light-dark(oklch(27.7% 0.0255 257.3), oklch(93.5% 0.0188 256.8))'
-    },
-    accentLight12: {
-        default: '#202935',
-        [supports_oklch]: 'oklch(27.7% 0.0255 257.3)'
-    },
-    accentDark12: {
-        default: '#e2eaf7',
-        [supports_oklch]: 'oklch(93.5% 0.0188 256.8)'
-    },
-    accentA12: {
-        default: 'light-dark(#010c19df, #e9f2fff7)',
-        [supports_p3]:
-            'light-dark(color(display-p3 0 0.0314 0.0824 / 0.864), color(display-p3 0.9216 0.9529 1 / 0.964))'
-    },
-    accentLightA12: {
-        default: '#010c19df',
-        [supports_p3]: 'color(display-p3 0 0.0314 0.0824 / 0.864)'
-    },
-    accentDarkA12: {
-        default: '#e9f2fff7',
-        [supports_p3]: 'color(display-p3 0.9216 0.9529 1 / 0.964)'
-    },
+    accent12: `light-dark(${defaultColors.light12}, ${defaultColors.dark12})`,
+    accentLight12: defaultColors.light12,
+    accentDark12: defaultColors.dark12,
+    accentA12: `light-dark(${defaultColors.lightA12}, ${defaultColors.darkA12})`,
+    accentLightA12: defaultColors.lightA12,
+    accentDarkA12: defaultColors.darkA12,
     blackA12: {
         default: 'rgba(0, 0, 0, 0.95)',
         [supports_p3]: 'color(display-p3 0 0 0 / 0.95)'
