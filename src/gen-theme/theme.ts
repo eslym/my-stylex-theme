@@ -2,9 +2,9 @@ import { array_12, make_color, type Tupple } from './utils';
 import { generateRadixColors } from './colors';
 
 export type ThemeOptions = {
-    accents: Record<string, string | [light: string, dark: string]>;
+    extra?: Record<string, string | [light: string, dark: string]>;
     surface: [light: string, dark: string];
-    gray: string | [light: string, dark: string];
+    accent: string | [light: string, dark: string];
 };
 
 export type ColorVar = {
@@ -14,36 +14,40 @@ export type ColorVar = {
 
 export type ColorScale = Record<'color' | 'alpha', Record<'light' | 'dark', Tupple<ColorVar, 12>>>;
 
+export type ThemeSpec = Record<'surface' | 'accent', ColorScale>;
+
 export type ThemeResult = {
-    surface: ColorScale;
-    default: ColorScale;
-    accents: Record<string, ColorScale>;
+    default: ThemeSpec;
+    [name: string]: ThemeSpec;
 };
 
 function light_dark(color: string | [light: string, dark: string]): [light: string, dark: string] {
     return Array.isArray(color) ? color : [color, color];
 }
 
-export function generate_theme({ accents, surface, gray }: ThemeOptions): ThemeResult {
+export function generate_theme({ extra = {}, surface, accent }: ThemeOptions): ThemeResult {
+    const [light, dark] = light_dark(accent);
     const default_light = generateRadixColors({
         appearance: 'light',
-        gray: light_dark(gray)[0],
+        gray: light,
         background: surface[0],
-        accent: light_dark(gray)[0]
+        accent: light
     });
     const default_dark = generateRadixColors({
         appearance: 'dark',
-        gray: light_dark(gray)[1],
+        gray: dark,
         background: surface[1],
-        accent: light_dark(gray)[1]
+        accent: dark
     });
 
-    const surface_colors = color_scale(default_light, default_dark);
-    const default_colors = color_scale(default_light, default_dark, 'accent');
+    const theme_colors: ThemeResult = {
+        default: {
+            surface: color_scale(default_light, default_dark),
+            accent: color_scale(default_light, default_dark, 'accent')
+        }
+    };
 
-    const accent_colors: Record<string, ColorScale> = {};
-
-    for (const [name, color] of Object.entries(accents)) {
+    for (const [name, color] of Object.entries(extra)) {
         const [light, dark] = light_dark(color);
         const light_theme = generateRadixColors({
             appearance: 'light',
@@ -57,14 +61,12 @@ export function generate_theme({ accents, surface, gray }: ThemeOptions): ThemeR
             background: surface[1],
             accent: dark
         });
-        accent_colors[name] = color_scale(light_theme, dark_theme, 'accent');
+        theme_colors[name] = {
+            surface: color_scale(light_theme, dark_theme),
+            accent: color_scale(light_theme, dark_theme, 'accent')
+        };
     }
-
-    return {
-        surface: surface_colors,
-        default: default_colors,
-        accents: accent_colors
-    };
+    return theme_colors;
 }
 
 type GeneratedRadixColors = ReturnType<typeof generateRadixColors>;

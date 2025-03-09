@@ -1,21 +1,22 @@
-import { radixColors } from '$lib/styles/theme/radix.stylex';
+import { radixAccent, radixScale, radixSurface } from '$lib/styles/theme/radix.stylex';
 import { baseValue } from '$lib/styles/values.stylex';
 import * as stylex from '@stylexjs/stylex';
 
 const where_checked = ':where(:checked, [aria-checked=true])';
+const where_indeterminate = ':where(:indeterminate, [aria-checked=mixed])';
 const where_disabled = ':where(:disabled, [aria-disabled=true])';
 
 export const switches = stylex.create({
     styles: {
         '::before': {
-            backgroundColor: radixColors.whiteA12,
+            backgroundColor: radixScale.whiteA12,
             borderRadius: '50%',
             content: '""',
             display: 'block',
             position: 'absolute',
             width: `calc(${baseValue.lengthRelative} * 4)`,
             height: `calc(${baseValue.lengthRelative} * 4)`,
-            border: `1px solid ${radixColors.blackA4}`,
+            border: `1px solid ${radixScale.blackA4}`,
             transformOrigin: 'center',
             transform: `translateX(calc(${baseValue.lengthRelative} * -1.5))`,
             transitionProperty: 'transform',
@@ -27,7 +28,7 @@ export const switches = stylex.create({
                 transform: `translateX(calc(${baseValue.lengthRelative} * 1.5))`
             }
         },
-        outlineColor: radixColors.accentA8,
+        outlineColor: radixAccent.alpha8,
         outlineWidth: {
             default: 0,
             ':focus-visible': `calc(${baseValue.lengthFixed} * 0.5)`
@@ -45,10 +46,10 @@ export const switches = stylex.create({
         height: `calc(${baseValue.lengthRelative} * 5)`,
         borderRadius: '9999px',
         backgroundColor: {
-            default: radixColors.surface6,
-            [where_checked]: radixColors.accentLight9
+            default: `light-dark(${radixScale.blackA3}, ${radixScale.whiteA3})`,
+            [where_checked]: radixSurface.light9
         },
-        boxShadow: `0 calc(${baseValue.lengthRelative} * 0.5) calc(${baseValue.lengthRelative} * 0.5) 0 ${radixColors.blackA5} inset`,
+        boxShadow: `0 calc(${baseValue.lengthRelative} * 0.5) calc(${baseValue.lengthRelative} * 0.5) 0 ${radixScale.blackA5} inset`,
         transitionProperty: 'background-color, color, outline-color, outline-width',
         transitionDuration: baseValue.transitionDuration,
         transitionTimingFunction: baseValue.transitionEasing,
@@ -117,7 +118,7 @@ export const checkbox = stylex.create({
             borderLeftStyle: 'solid',
             borderBottomStyle: 'solid',
             borderRightStyle: 'none',
-            borderColor: radixColors.whiteA12,
+            borderColor: radixScale.whiteA12,
             borderWidth: 0,
             marginTop: '-10%',
             width: '50%',
@@ -135,7 +136,16 @@ export const checkbox = stylex.create({
                 transform: 'scale(1)'
             }
         },
-        outlineColor: radixColors.accentA8,
+        [where_indeterminate]: {
+            '::before': {
+                height: '0',
+                rotate: '0deg',
+                marginTop: '0',
+                borderWidth: `calc(${baseValue.lengthRelative} * 0.5)`,
+                transform: 'scale(1)'
+            }
+        },
+        outlineColor: radixAccent.alpha8,
         outlineWidth: {
             default: 0,
             ':focus-visible': `calc(${baseValue.lengthFixed} * 0.5)`
@@ -154,16 +164,17 @@ export const checkbox = stylex.create({
         height: `calc(${baseValue.lengthRelative} * 5)`,
         borderStyle: 'solid',
         borderColor: {
-            default: radixColors.surface9,
-            ':focus': radixColors.accent9
+            default: `light-dark(${radixScale.blackA7}, ${radixScale.whiteA7})`,
+            ':focus': `light-dark(${radixScale.blackA8}, ${radixScale.whiteA8})`
         },
         borderWidth: {
             default: `calc(${baseValue.lengthFixed} * 0.25)`,
-            [where_checked]: 0
+            [where_checked]: 0,
         },
         backgroundColor: {
             default: 'transparent',
-            [where_checked]: radixColors.accentLight9
+            [where_checked]: radixSurface.light9,
+            [where_indeterminate]: radixSurface.lightA9
         },
         cursor: 'pointer',
         userSelect: 'none',
@@ -172,8 +183,8 @@ export const checkbox = stylex.create({
         transitionDuration: baseValue.transitionDuration,
         transitionTimingFunction: baseValue.transitionEasing,
         boxShadow: {
-            default: `0 0 0 0 ${radixColors.blackA3}`,
-            [where_checked]: `0 calc(${baseValue.lengthRelative} * 0.5) calc(${baseValue.lengthRelative} * 1) 0 ${radixColors.blackA3}`
+            default: `0 0 0 0 ${radixScale.blackA3}`,
+            [where_checked]: `0 calc(${baseValue.lengthRelative} * 0.5) calc(${baseValue.lengthRelative} * 1) 0 ${radixScale.blackA3}`
         },
         opacity: {
             default: 1,

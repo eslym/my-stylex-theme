@@ -1,235 +1,174 @@
 import { camelCase, kebabCase } from 'lodash-es';
-import { collect, concat, lined, obj } from './template';
-import { generate_theme, type ColorScale, type ThemeOptions, type ThemeResult } from './theme';
-import { get_color, make_color, make_light_dark, supports_oklch, supports_p3 } from './utils';
+import { T } from './template';
+import {
+    generate_theme,
+    type ColorScale,
+    type ThemeOptions,
+    type ThemeResult,
+    type ThemeSpec
+} from './theme';
+import { get_color, make_color, supports_oklch, supports_p3 } from './utils';
+import { resolve } from 'path';
 
-function* stringify(value: any): Iterable<string> {
-    if (typeof value === 'string') {
-        yield* JSON.stringify(value);
-        return;
-    }
-    yield* obj(
-        Object.entries(value).map(([k, v]) => {
-            if (k === supports_p3) {
-                return ['[supports_p3]', stringify(v)];
-            }
-            if (k === supports_oklch) {
-                return ['[supports_oklch]', stringify(v)];
-            }
-            return [k, stringify(v)];
-        })
-    );
-}
+type ColorCategory = 'accent' | 'surface';
+type CodeExt = 'ts' | 'js';
+
+const stringify_replace = {
+    [JSON.stringify(supports_p3)]: '[supports_p3]',
+    [JSON.stringify(supports_oklch)]: '[supports_oklch]'
+};
+
+const stylex_define = T.fn`stylex.defineVars`;
+const stylex_create_theme = T.fn`stylex.createTheme`;
+
+const array_12 = [...Array(12).keys()];
 
 function* colors_props_for(scale: ColorScale, index: number): Iterable<[string, Iterable<string>]> {
     const n = index + 1;
-    yield [`light${n}`, stringify(scale.color.light[index])];
-    yield [`dark${n}`, stringify(scale.color.dark[index])];
-    yield [`lightA${n}`, stringify(scale.alpha.light[index])];
-    yield [`darkA${n}`, stringify(scale.alpha.dark[index])];
+    yield [`light${n}`, T.stringify(scale.color.light[index], stringify_replace)];
+    yield [`dark${n}`, T.stringify(scale.color.dark[index], stringify_replace)];
+    yield [`lightA${n}`, T.stringify(scale.alpha.light[index], stringify_replace)];
+    yield [`darkA${n}`, T.stringify(scale.alpha.dark[index], stringify_replace)];
 }
 
-function* theme_props_for(
+function* theme_props_for(source: string, i: number): Iterable<[string, Iterable<string>]> {
+    yield [`color${i}`, T.tl`light-dark(${`${source}.light${i}`}, ${`${source}.dark${i}`})`];
+    yield [`alpha${i}`, T.tl`light-dark(${`${source}.lightA${i}`}, ${`${source}.darkA${i}`})`];
+    yield [`light${i}`, `${source}.light${i}`];
+    yield [`lightA${i}`, `${source}.lightA${i}`];
+    yield [`dark${i}`, `${source}.dark${i}`];
+    yield [`darkA${i}`, `${source}.darkA${i}`];
+}
+
+function generate_color_code(
+    dir: string,
+    ext: CodeExt,
     name: string,
-    scale: ColorScale,
-    index: number
-): Iterable<[string, Iterable<string>]> {
-    const n = index + 1;
-    yield [
-        `${name}${n}`,
-        stringify(make_light_dark(scale.color.light[index], scale.color.dark[index]))
-    ];
-    yield [`${name}Light${n}`, stringify(scale.color.light[index])];
-    yield [`${name}Dark${n}`, stringify(scale.color.dark[index])];
-    yield [
-        `${name}A${n}`,
-        stringify(make_light_dark(scale.alpha.light[index], scale.alpha.dark[index]))
-    ];
-    yield [`${name}LightA${n}`, stringify(scale.alpha.light[index])];
-    yield [`${name}DarkA${n}`, stringify(scale.alpha.dark[index])];
+    cat: ColorCategory,
+    scale: ColorScale
+): Promise<number> {
+    const exports = T.code`export const ${camelCase(`${name} ${cat} colors`)} = ${stylex_define(
+        T.obj(T.flat(T.map(array_12, (i) => colors_props_for(scale, i))))
+    )};`;
+
+    const code = T.str(
+        T.lf([
+            `import * as stylex from '@stylexjs/stylex';`,
+            '',
+            `const supports_p3 = ${JSON.stringify(supports_p3)};`,
+            `const supports_oklch = ${JSON.stringify(supports_oklch)};`,
+            '',
+            exports,
+            ''
+        ])
+    );
+
+    const path = resolve(dir, `colors/${cat}/${kebabCase(name)}.stylex.${ext}`);
+
+    return Bun.write(path, code);
 }
 
-function* theme_props_vars_for(
+function generate_scheme_code(
+    dir: string,
+    ext: CodeExt,
     name: string,
-    color: string,
-    index: number,
-    scheme: 'light' | 'dark' | 'auto'
-): Iterable<[string, Iterable<string>]> {
-    const n = index + 1;
-    yield [
-        `${name}${n}`,
-        scheme === 'auto'
-            ? concat(
-                  '`light-dark(${ ',
-                  color,
-                  '.light',
-                  n.toString(),
-                  ' }, ${ ',
-                  color,
-                  '.dark',
-                  n.toString(),
-                  ' })`'
-              )
-            : scheme === 'light'
-              ? `${color}.light${n}`
-              : `${color}.dark${n}`
-    ];
-    yield [`${name}Light${n}`, `${color}.light${n}`];
-    yield [`${name}Dark${n}`, `${color}.dark${n}`];
-    yield [
-        `${name}A${n}`,
-        scheme === 'auto'
-            ? concat(
-                  '`light-dark(${ ',
-                  color,
-                  '.lightA',
-                  n.toString(),
-                  ' }, ${ ',
-                  color,
-                  '.darkA',
-                  n.toString(),
-                  ' })`'
-              )
-            : scheme === 'light'
-              ? `${color}.lightA${n}`
-              : `${color}.darkA${n}`
-    ];
-    yield [`${name}LightA${n}`, `${color}.lightA${n}`];
-    yield [`${name}DarkA${n}`, `${color}.darkA${n}`];
+    cat: ColorCategory
+): Promise<number> {
+    const src_var = camelCase(`${name} ${cat} colors`);
+    const radix_var = camelCase(`radix ${cat}`);
+
+    const exports = T.code`export const ${camelCase(`${cat} ${name}`)} = ${stylex_create_theme(
+        radix_var,
+        T.obj(T.flat(T.map(array_12, (i) => theme_props_for(src_var, i + 1))))
+    )};`;
+
+    const code = T.str(
+        T.lf([
+            `import * as stylex from '@stylexjs/stylex';`,
+            `import { ${radix_var} } from '../../radix.stylex';`,
+            `import { ${src_var} } from '../../colors/${cat}/${kebabCase(name)}.stylex';`,
+            '',
+            exports,
+            ''
+        ])
+    );
+
+    const path = resolve(dir, `schemes/${cat}/${kebabCase(name)}.stylex.${ext}`);
+
+    return Bun.write(path, code);
 }
 
-function generate_base(colors: ThemeResult) {
+function* generate_scheme_codes(
+    dir: string,
+    ext: CodeExt,
+    name: string,
+    spec: ThemeSpec
+): Iterable<Promise<number>> {
+    for (const [cat, scale] of Object.entries(spec)) {
+        yield generate_color_code(dir, ext, name, cat as ColorCategory, scale);
+        yield generate_scheme_code(dir, ext, name, cat as ColorCategory);
+    }
+}
+
+function generate_radix_base(dir: string, ext: CodeExt): Promise<number> {
+    const src_var = { accent: 'defaultAccentColors', surface: 'defaultSurfaceColors' } as const;
+    const radix_var = { accent: 'radixAccent', surface: 'radixSurface' } as const;
+
+    const lines: Iterable<string>[] = [
+        `import * as stylex from '@stylexjs/stylex';`,
+        `import { ${src_var.accent} } from './colors/accent/default.stylex';`,
+        `import { ${src_var.surface} } from './colors/surface/default.stylex';`,
+        '',
+        `const supports_p3 = ${JSON.stringify(supports_p3)};`,
+        `const supports_oklch = ${JSON.stringify(supports_oklch)};`,
+        ''
+    ];
+
+    for (const cat of ['accent', 'surface'] as const) {
+        const props = T.obj(T.flat(T.map(array_12, (i) => theme_props_for(src_var[cat], i + 1))));
+        lines.push(T.code`export const ${radix_var[cat]} = ${stylex_define(props)};`);
+        lines.push('');
+    }
+
     const props: [string, Iterable<string>][] = [];
-    for (let i = 0; i < 12; i++) {
+    for (const i of array_12) {
         const n = i + 1;
-        props.push(...theme_props_for('surface', colors.surface, i));
-        props.push(...theme_props_vars_for('accent', 'defaultColors', i, 'auto'));
-        props.push([
-            `blackA${i + 1}`,
-            stringify(
-                make_color(
-                    get_color('black', { num: n, alpha: true }),
-                    get_color('black', { num: n, alpha: true, p3: true })
+        for (const color of ['black', 'white'] as const) {
+            props.push([
+                `${color}A${n}`,
+                T.stringify(
+                    make_color(
+                        get_color(color, { alpha: true, num: n }),
+                        get_color(color, { alpha: true, num: n, p3: true })
+                    ),
+                    stringify_replace
                 )
-            )
-        ]);
-        props.push([
-            `whiteA${i + 1}`,
-            stringify(
-                make_color(
-                    get_color('white', { num: n, alpha: true }),
-                    get_color('white', { num: n, alpha: true, p3: true })
-                )
-            )
-        ]);
+            ]);
+        }
     }
-    return collect(
-        lined([
-            "import * as stylex from'@stylexjs/stylex';",
-            "import { defaultColors } from './colors/default.stylex';",
-            '',
-            concat('const supports_p3 = ', JSON.stringify(supports_p3), ';'),
-            concat('const supports_oklch = ', JSON.stringify(supports_oklch), ';'),
-            '',
-            concat('export const radixColors = stylex.defineVars(', obj(props), ');')
-        ])
-    );
+    lines.push(T.code`export const radixScale = ${stylex_define(T.obj(props))};`);
+
+    const code = T.str(T.lf(lines));
+
+    const path = resolve(dir, `radix.stylex.${ext}`);
+
+    return Bun.write(path, code);
 }
 
-function generate_color_code(name: string, colors: ColorScale) {
-    const color_var = camelCase(`${name} colors`);
-    const props: [string, Iterable<string>][] = [];
-    for (let i = 0; i < 12; i++) {
-        props.push(...colors_props_for(colors, i));
-    }
-
-    return collect(
-        lined([
-            "import * as stylex from'@stylexjs/stylex';",
-            '',
-            concat('const supports_p3 = ', JSON.stringify(supports_p3), ';'),
-            concat('const supports_oklch = ', JSON.stringify(supports_oklch), ';'),
-            '',
-            concat('export const ', color_var, ' = stylex.defineVars(', obj(props), ');')
-        ])
-    );
-}
-
-function generate_theme_code(
-    name: string,
-    type = 'accent',
-    scheme: 'light' | 'dark' | 'auto' = 'auto'
-) {
-    const color_var = camelCase(`${name} colors`);
-    const scheme_name = camelCase(`${type} ${name}`);
-    const props: [string, Iterable<string>][] = [];
-    for (let i = 0; i < 12; i++) {
-        props.push(...theme_props_vars_for(type, color_var, i, scheme));
-    }
-    return collect(
-        lined([
-            "import * as stylex from'@stylexjs/stylex';",
-            `import { ${color_var} } from '../colors/${kebabCase(name)}.stylex';`,
-            "import { radixColors } from '../radix.stylex';",
-            '',
-            concat(
-                'export const ',
-                scheme_name,
-                ' = stylex.createTheme(radixColors, ',
-                obj(props),
-                ');'
-            )
-        ])
-    );
-}
-
-function generate_default_theme_code() {
-    return collect(
-        lined([
-            "import * as stylex from'@stylexjs/stylex';",
-            "import { radixColors } from '../radix.stylex';",
-            '',
-            concat('export const accentDefault = stylex.createTheme(radixColors, {});')
-        ])
-    );
-}
-
-export async function generate_codes(dir: string, config: ThemeOptions, ext = 'ts') {
+export async function generate_codes(dir: string, config: ThemeOptions, ext: CodeExt = 'ts') {
     await Bun.$`rm -rf ${dir}`;
-    await Bun.$`mkdir -p ${dir}/accents`;
-    await Bun.$`mkdir -p ${dir}/colors`;
+    await Bun.$`mkdir -p ${dir}/{colors,schemes}/{accent,surface}`;
 
     const colors = generate_theme(config);
 
-    await Bun.write(
-        `${dir}/colors/default.stylex.${ext}`,
-        generate_color_code('default', colors.default)
-    );
-    await Bun.write(`${dir}/radix.stylex.${ext}`, generate_base(colors));
-    await Bun.write(`${dir}/accents/default.stylex.${ext}`, generate_default_theme_code());
-    await Bun.write(
-        `${dir}/accents/default-light.stylex.${ext}`,
-        generate_theme_code('default', 'accent', 'light')
-    );
-    await Bun.write(
-        `${dir}/accents/default-dark.stylex.${ext}`,
-        generate_theme_code('default', 'accent', 'dark')
-    );
+    const promises = Array.from(generate_scheme_codes(dir, ext, 'default', colors.default));
+    promises.push(generate_radix_base(dir, ext));
 
-    for (const [name, scheme] of Object.entries(colors.accents)) {
-        const filename = kebabCase(name);
-        await Bun.write(
-            `${dir}/colors/${filename}.stylex.${ext}`,
-            generate_color_code(name, scheme)
-        );
-        await Bun.write(`${dir}/accents/${filename}.stylex.${ext}`, generate_theme_code(name));
-        await Bun.write(
-            `${dir}/accents/${filename}-light.stylex.${ext}`,
-            generate_theme_code(name, 'accent', 'light')
-        );
-        await Bun.write(
-            `${dir}/accents/${filename}-dark.stylex.${ext}`,
-            generate_theme_code(name, 'accent', 'dark')
-        );
+    delete (colors as any).default;
+
+    for (const [name, spec] of Object.entries(colors)) {
+        promises.push(...generate_scheme_codes(dir, ext, name, spec));
     }
+
+    await Promise.all(promises);
 }

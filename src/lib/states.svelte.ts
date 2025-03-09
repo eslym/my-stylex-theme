@@ -1,14 +1,9 @@
 import type { button } from '$lib/styles/buttons';
-import { accentNegative } from '$lib/styles/theme/accents/negative.stylex';
-import { accentPositive } from '$lib/styles/theme/accents/positive.stylex';
-import { accentPrimary } from '$lib/styles/theme/accents/primary.stylex';
-import { accentSecondary } from '$lib/styles/theme/accents/secondary.stylex';
-import { accentTertiary } from '$lib/styles/theme/accents/tertiary.stylex';
-import { accentWarning } from '$lib/styles/theme/accents/warning.stylex';
-import type { radixColors } from '$lib/styles/theme/radix.stylex';
+import type { radixAccent, radixSurface } from '$lib/styles/theme/radix.stylex';
 import type { Theme } from '@stylexjs/stylex';
 
-let theme: Theme<typeof radixColors> | null = $state(null);
+let accent: Theme<typeof radixAccent> | null = $state(null);
+let surface: Theme<typeof radixSurface> | null = $state(null);
 
 let buttonType: Exclude<keyof typeof button, 'size'> = $state('solid');
 
@@ -16,22 +11,18 @@ let disabled = $state(false);
 
 let checked = $state(false);
 
-export const themes: Record<string, Theme<typeof radixColors> | null> = {
-    default: null,
-    primary: accentPrimary,
-    secondary: accentSecondary,
-    tertiary: accentTertiary,
-    positive: accentPositive,
-    negative: accentNegative,
-    warning: accentWarning
-};
-
 export const config = {
-    get theme() {
-        return theme;
+    get accent() {
+        return accent;
     },
-    set theme(value: Theme<typeof radixColors> | null) {
-        theme = value;
+    set accent(value: Theme<typeof radixAccent> | null) {
+        accent = value;
+    },
+    get surface() {
+        return surface;
+    },
+    set surface(value: Theme<typeof radixSurface> | null) {
+        surface = value;
     },
     get buttonType() {
         return buttonType;

@@ -1,13 +1,12 @@
 import * as stylex from '@stylexjs/stylex';
-import { radixColors } from './theme/radix.stylex';
 import { baseValue } from './values.stylex';
+import { radixAccent, radixScale, radixSurface } from '$lib/styles/theme/radix.stylex';
 
 const where_disabled = ':where(:disabled, [aria-disabled=true])';
-const supports_oklch = '@supports (color: oklch(1 0 0))';
 
 const styles = stylex.create({
     base: {
-        outlineColor: radixColors.accentA8,
+        outlineColor: radixAccent.alpha8,
         outlineWidth: {
             default: 0,
             ':focus-visible': `calc(${baseValue.lengthFixed} * 0.5)`
@@ -51,37 +50,34 @@ const styles = stylex.create({
     },
     solid: {
         backgroundColor: {
-            default: radixColors.accentLight9,
-            ':hover': {
-                default: `hsl(from ${radixColors.accentLight9} h s calc(l * 1.15))`,
-                [supports_oklch]: `oklch(from ${radixColors.accentLight9} calc(l * 1.15) c h)`
-            }
+            default: radixSurface.light9,
+            ':hover': radixSurface.light10
         },
-        color: radixColors.surfaceDark12
+        color: radixScale.whiteA12
     },
     outline: {
         backgroundColor: {
             default: 'transparent',
-            ':hover': radixColors.accentA3
+            ':hover': radixAccent.alpha3
         },
-        color: radixColors.accent11,
+        color: radixAccent.color11,
         borderStyle: 'solid',
         borderWidth: `calc(${baseValue.lengthFixed} * 0.5)`,
-        borderColor: radixColors.accent10
+        borderColor: radixAccent.color8
     },
     ghost: {
         backgroundColor: {
-            default: radixColors.accentA3,
-            ':hover': radixColors.accentA4
+            default: radixAccent.alpha3,
+            ':hover': radixAccent.alpha4
         },
-        color: radixColors.accent11
+        color: radixAccent.color11
     },
     minimal: {
         backgroundColor: {
             default: 'transparent',
-            ':hover': radixColors.accentA3
+            ':hover': radixAccent.alpha3
         },
-        color: radixColors.accent11
+        color: radixAccent.color11
     },
     xs: {
         height: `calc(${baseValue.lengthRelative} * 5)`,
