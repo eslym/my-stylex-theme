@@ -10,10 +10,22 @@
             color: radixColors.surface12
         },
         schemeLight: {
-            colorScheme: 'light'
+            colorScheme: 'light',
+            color: radixColors.surface12
         },
         schemeDark: {
-            colorScheme: 'dark'
+            colorScheme: 'dark',
+            color: radixColors.surface12
+        },
+        box: {
+            width: '50px',
+            height: '50px',
+            minWidth: '50px',
+            minHeight: '50px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontWeight: 700,
         }
     });
 </script>
@@ -74,6 +86,55 @@
             Disabled
         </label>
     </div>
+    {#each [styles.schemeLight, styles.schemeDark] as scheme}
+        <div>
+            <div
+                stylex-attrs={[scheme, theme, styles.controls]}
+                stylex-create-at={Infinity}
+                stylex-create={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(12, 50px)'
+                }}
+            >
+                {#each { length: 12 }, i}
+                    {@const t = i < 8 ? 12 : 1}
+                    <div
+                        stylex-attrs={[styles.box]}
+                        style:background-color={(radixColors as any)[`accent${i + 1}`]}
+                    >
+                        <span style:color={(radixColors as any)[`accent${t}`]}>{i + 1}</span>
+                    </div>
+                {/each}
+                {#each { length: 12 }, i}
+                    {@const t = i < 8 ? 12 : 1}
+                    <div
+                        stylex-attrs={[styles.box]}
+                        style:background-color={(radixColors as any)[`accentA${i + 1}`]}
+                    >
+                        <span style:color={(radixColors as any)[`accent${t}`]}>{i + 1}</span>
+                    </div>
+                {/each}
+                {#each { length: 12 }, i}
+                    {@const t = i < 8 ? 12 : 1}
+                    <div
+                        stylex-attrs={[styles.box]}
+                        style:background-color={(radixColors as any)[`surface${i + 1}`]}
+                    >
+                        <span style:color={(radixColors as any)[`surface${t}`]}>{i + 1}</span>
+                    </div>
+                {/each}
+                {#each { length: 12 }, i}
+                    {@const t = i < 8 ? 12 : 1}
+                    <div
+                        stylex-attrs={[styles.box]}
+                        style:background-color={(radixColors as any)[`surfaceA${i + 1}`]}
+                    >
+                        <span style:color={(radixColors as any)[`surface${t}`]}>{i + 1}</span>
+                    </div>
+                {/each}
+            </div>
+        </div>
+    {/each}
     {#each [styles.schemeLight, styles.schemeDark] as scheme}
         <div stylex-attrs={[scheme, styles.controls]}>
             <button {disabled} stylex-attrs={[theme, button[type], button.size.xl]}>

@@ -23,13 +23,15 @@ declare global {
 
 declare module 'svelte/elements' {
     export interface HTMLAttributes<T> {
-        ['stylex-attrs']?: StyleXAttr | readonly StyleXAttr[];
-        ['stylex-create']?: UserAuthoredStyles; // if you need
+        'stylex-attrs'?: StyleXAttr | readonly StyleXAttr[];
+        'stylex-create'?: UserAuthoredStyles; // if you need
+        'stylex-create-at'?: number; // if you need
     }
 
     export interface SVGAttributes<T> {
-        ['stylex-attrs']?: StyleXAttr | readonly StyleXAttr[];
-        ['stylex-create']?: UserAuthoredStyles; // if you need
+        'stylex-attrs'?: StyleXAttr | readonly StyleXAttr[];
+        'stylex-create'?: UserAuthoredStyles; // if you need
+        'stylex-create-at'?: number; // if you need
     }
 }
 

@@ -14,11 +14,11 @@
     "lint": "prettier --check ."
   },
   "devDependencies": {
-    "@eslym/svelte-preprocess-stylex": "^0.1.4",
+    "@eslym/svelte-preprocess-stylex": "^0.1.5",
     "@radix-ui/colors": "^3.0.0",
     "@stylexjs/stylex": "^0.11.1",
     "@sveltejs/adapter-auto": "^4.0.0",
-    "@sveltejs/kit": "^2.18.0",
+    "@sveltejs/kit": "^2.19.0",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
     "@types/bun": "^1.2.4",
     "@types/lodash-es": "^4.17.12",
