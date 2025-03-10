@@ -1,35 +1,39 @@
 import * as stylex from '@stylexjs/stylex';
-import { baseValue } from './values.stylex';
+import { tokens, values } from './values.stylex';
 import { radixAccent, radixScale, radixSurface } from '$lib/styles/theme/radix.stylex';
 
 const where_disabled = ':where(:disabled, [aria-disabled=true])';
 
 const styles = stylex.create({
     base: {
+        [tokens.borderWidth]: '0',
+        [tokens.paddingY]: '0.25rem',
+        [tokens.paddingX]: '1rem',
+        [tokens.borderRadius]: '4px',
         outlineColor: radixAccent.alpha8,
         outlineWidth: {
             default: 0,
-            ':focus-visible': `calc(${baseValue.lengthFixed} * 0.5)`
+            ':focus-visible': '2px'
         },
         outlineOffset: {
             default: 0,
             ':focus-visible': '1px'
         },
         outlineStyle: 'solid',
-        borderRadius: baseValue.lengthFixed,
-        fontSize: baseValue.fontSize,
+        borderRadius: tokens.borderRadius,
+        borderStyle: 'none',
+        borderWidth: tokens.borderWidth,
+        fontSize: '1rem',
         textAlign: 'center',
-        paddingLeft: `calc(${baseValue.lengthRelative} * 3)`,
-        paddingRight: `calc(${baseValue.lengthRelative} * 3)`,
+        verticalAlign: 'middle',
+        padding: `${tokens.paddingY} ${tokens.paddingX}`,
         cursor: 'pointer',
         userSelect: 'none',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: 'inline-block',
         transitionProperty:
-            'background-color, color, border-color, outline-color, outline-width, transform',
-        transitionDuration: baseValue.transitionDuration,
-        transitionTimingFunction: baseValue.transitionEasing,
+            'background-color, color, border-color, outline-color, outline-width, outline-offset, transform',
+        transitionDuration: values.transitionDuration,
+        transitionTimingFunction: values.transitionEasing,
         transformOrigin: 'center',
         transform: {
             default: 'scale(1)',
@@ -43,10 +47,8 @@ const styles = stylex.create({
             default: 'auto',
             [where_disabled]: 'none'
         },
-        border: 'none',
         fontWeight: 500,
-        height: `calc(${baseValue.lengthRelative} * 7)`,
-        gap: baseValue.lengthRelative
+        lineHeight: 1.25
     },
     solid: {
         backgroundColor: {
@@ -56,13 +58,15 @@ const styles = stylex.create({
         color: radixScale.whiteA12
     },
     outline: {
+        [tokens.borderWidth]: '2px',
+        padding: `calc(${tokens.paddingY} - ${tokens.borderWidth}) calc(${tokens.paddingX} - ${tokens.borderWidth})`,
         backgroundColor: {
             default: 'transparent',
             ':hover': radixAccent.alpha3
         },
         color: radixAccent.color11,
+        borderWidth: tokens.borderWidth,
         borderStyle: 'solid',
-        borderWidth: `calc(${baseValue.lengthFixed} * 0.5)`,
         borderColor: radixAccent.color8
     },
     ghost: {
@@ -80,37 +84,34 @@ const styles = stylex.create({
         color: radixAccent.color11
     },
     xs: {
-        height: `calc(${baseValue.lengthRelative} * 5)`,
-        fontSize: `calc(${baseValue.fontSize} * 0.75)`,
-        paddingLeft: `calc(${baseValue.lengthRelative} * 1.5)`,
-        paddingRight: `calc(${baseValue.lengthRelative} * 1.5)`
+        fontSize: '0.5rem',
+        [tokens.borderWidth]: '1px',
+        [tokens.paddingY]: '0.05rem',
+        [tokens.paddingX]: '0.5rem'
     },
     sm: {
-        height: `calc(${baseValue.lengthRelative} * 6)`,
-        fontSize: `calc(${baseValue.fontSize} * 0.875)`,
-        paddingLeft: `calc(${baseValue.lengthRelative} * 2)`,
-        paddingRight: `calc(${baseValue.lengthRelative} * 2)`
+        fontSize: '0.75rem',
+        [tokens.borderWidth]: '2px',
+        [tokens.paddingY]: '0.125rem',
+        [tokens.paddingX]: '0.75rem'
     },
     md: {
-        height: `calc(${baseValue.lengthRelative} * 7)`,
-        fontSize: baseValue.fontSize,
-        paddingLeft: `calc(${baseValue.lengthRelative} * 3)`,
-        paddingRight: `calc(${baseValue.lengthRelative} * 3)`,
-        borderRadius: `calc(${baseValue.lengthFixed} * 0.5)`
+        fontSize: '1rem',
+        [tokens.borderWidth]: '2px',
+        [tokens.paddingY]: '0.25rem',
+        [tokens.paddingX]: '1rem'
     },
     lg: {
-        height: `calc(${baseValue.lengthRelative} * 8)`,
-        fontSize: `calc(${baseValue.fontSize} * 1.125)`,
-        paddingLeft: `calc(${baseValue.lengthRelative} * 4)`,
-        paddingRight: `calc(${baseValue.lengthRelative} * 4)`,
-        borderRadius: `calc(${baseValue.lengthFixed} * 1.25)`
+        fontSize: '1.25rem',
+        [tokens.borderWidth]: '2px',
+        [tokens.paddingY]: '0.315rem',
+        [tokens.paddingX]: '1.75rem'
     },
     xl: {
-        height: `calc(${baseValue.lengthRelative} * 9)`,
-        fontSize: `calc(${baseValue.fontSize} * 1.25)`,
-        paddingLeft: `calc(${baseValue.lengthRelative} * 6)`,
-        paddingRight: `calc(${baseValue.lengthRelative} * 6)`,
-        borderRadius: `calc(${baseValue.lengthFixed} * 1.5)`
+        fontSize: '1.5rem',
+        [tokens.borderWidth]: '2px',
+        [tokens.paddingY]: '0.5rem',
+        [tokens.paddingX]: '2.5rem'
     }
 });
 

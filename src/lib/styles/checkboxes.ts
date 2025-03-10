@@ -1,5 +1,5 @@
 import { radixAccent, radixScale, radixSurface } from '$lib/styles/theme/radix.stylex';
-import { baseValue } from '$lib/styles/values.stylex';
+import { values } from '$lib/styles/values.stylex';
 import * as stylex from '@stylexjs/stylex';
 
 const where_checked = ':where(:checked, [aria-checked=true])';
@@ -14,24 +14,24 @@ export const switches = stylex.create({
             content: '""',
             display: 'block',
             position: 'absolute',
-            width: `calc(${baseValue.lengthRelative} * 4)`,
-            height: `calc(${baseValue.lengthRelative} * 4)`,
+            width: `1rem`,
+            height: `1rem`,
             border: `1px solid ${radixScale.blackA4}`,
             transformOrigin: 'center',
-            transform: `translateX(calc(${baseValue.lengthRelative} * -1.5))`,
+            transform: `translateX(-40%)`,
             transitionProperty: 'transform',
-            transitionDuration: baseValue.transitionDuration,
-            transitionTimingFunction: baseValue.transitionEasing
+            transitionDuration: values.transitionDuration,
+            transitionTimingFunction: values.transitionEasing
         },
         [where_checked]: {
             '::before': {
-                transform: `translateX(calc(${baseValue.lengthRelative} * 1.5))`
+                transform: `translateX(40%)`
             }
         },
         outlineColor: radixAccent.alpha8,
         outlineWidth: {
             default: 0,
-            ':focus-visible': `calc(${baseValue.lengthFixed} * 0.5)`
+            ':focus-visible': '2px'
         },
         outlineOffset: {
             default: 0,
@@ -42,17 +42,17 @@ export const switches = stylex.create({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: `calc(${baseValue.lengthRelative} * 8)`,
-        height: `calc(${baseValue.lengthRelative} * 5)`,
+        width: `2rem`,
+        height: `1.25rem`,
         borderRadius: '9999px',
         backgroundColor: {
             default: `light-dark(${radixScale.blackA3}, ${radixScale.whiteA3})`,
             [where_checked]: radixSurface.light9
         },
-        boxShadow: `0 calc(${baseValue.lengthRelative} * 0.5) calc(${baseValue.lengthRelative} * 0.5) 0 ${radixScale.blackA5} inset`,
-        transitionProperty: 'background-color, color, outline-color, outline-width',
-        transitionDuration: baseValue.transitionDuration,
-        transitionTimingFunction: baseValue.transitionEasing,
+        boxShadow: `0 0.125rem 0.125rem 0 ${radixScale.blackA5} inset`,
+        transitionProperty: 'background-color, color, outline-color, outline-width, outline-offset',
+        transitionDuration: values.transitionDuration,
+        transitionTimingFunction: values.transitionEasing,
         overflow: 'hidden',
         cursor: 'pointer',
         userSelect: 'none',
@@ -68,45 +68,27 @@ export const switches = stylex.create({
     },
     sm: {
         '::before': {
-            width: `calc(${baseValue.lengthRelative} * 3)`,
-            height: `calc(${baseValue.lengthRelative} * 3)`,
-            transform: `translateX(calc(${baseValue.lengthRelative} * -1))`
+            width: `0.75rem`,
+            height: `0.75rem`,
         },
-        [where_checked]: {
-            '::before': {
-                transform: `translateX(${baseValue.lengthRelative})`
-            }
-        },
-        width: `calc(${baseValue.lengthRelative} * 6)`,
-        height: `calc(${baseValue.lengthRelative} * 4)`
+        width: `1.5rem`,
+        height: `1rem`
     },
     md: {
         '::before': {
-            width: `calc(${baseValue.lengthRelative} * 3)`,
-            height: `calc(${baseValue.lengthRelative} * 3)`,
-            transform: `translateX(calc(${baseValue.lengthRelative} * -1))`
+            width: `1rem`,
+            height: `1rem`,
         },
-        [where_checked]: {
-            '::before': {
-                transform: `translateX(calc(${baseValue.lengthRelative}))`
-            }
-        },
-        width: `calc(${baseValue.lengthRelative} * 8)`,
-        height: `calc(${baseValue.lengthRelative} * 5)`
+        width: `2rem`,
+        height: `1.25rem`
     },
     lg: {
         '::before': {
-            width: `calc(${baseValue.lengthRelative} * 5)`,
-            height: `calc(${baseValue.lengthRelative} * 5)`,
-            transform: `translateX(calc(${baseValue.lengthRelative} * -2))`
+            width: `1.25rem`,
+            height: `1.25rem`,
         },
-        [where_checked]: {
-            '::before': {
-                transform: `translateX(calc(${baseValue.lengthRelative} * 2))`
-            }
-        },
-        width: `calc(${baseValue.lengthRelative} * 10)`,
-        height: `calc(${baseValue.lengthRelative} * 6)`
+        width: `2.5rem`,
+        height: `1.5rem`
     }
 });
 
@@ -127,12 +109,12 @@ export const checkbox = stylex.create({
             rotate: '-45deg',
             transform: 'scale(0)',
             transitionProperty: 'transform border-width',
-            transitionDuration: baseValue.transitionDuration,
-            transitionTimingFunction: baseValue.transitionEasing
+            transitionDuration: values.transitionDuration,
+            transitionTimingFunction: values.transitionEasing
         },
         [where_checked]: {
             '::before': {
-                borderWidth: `calc(${baseValue.lengthRelative} * 0.5)`,
+                borderWidth: `0.125rem`,
                 transform: 'scale(1)'
             }
         },
@@ -141,14 +123,14 @@ export const checkbox = stylex.create({
                 height: '0',
                 rotate: '0deg',
                 marginTop: '0',
-                borderWidth: `calc(${baseValue.lengthRelative} * 0.5)`,
+                borderWidth: `0.125rem`,
                 transform: 'scale(1)'
             }
         },
         outlineColor: radixAccent.alpha8,
         outlineWidth: {
             default: 0,
-            ':focus-visible': `calc(${baseValue.lengthFixed} * 0.5)`
+            ':focus-visible': `2px`
         },
         outlineOffset: {
             default: 0,
@@ -159,17 +141,17 @@ export const checkbox = stylex.create({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: `calc(${baseValue.lengthRelative} * 0.75)`,
-        width: `calc(${baseValue.lengthRelative} * 5)`,
-        height: `calc(${baseValue.lengthRelative} * 5)`,
+        borderRadius: `0.25rem`,
+        width: `1.25rem`,
+        height: `1.25rem`,
         borderStyle: 'solid',
         borderColor: {
             default: `light-dark(${radixScale.blackA7}, ${radixScale.whiteA7})`,
             ':focus': `light-dark(${radixScale.blackA8}, ${radixScale.whiteA8})`
         },
         borderWidth: {
-            default: `calc(${baseValue.lengthFixed} * 0.25)`,
-            [where_checked]: 0,
+            default: `1px`,
+            [where_checked]: 0
         },
         backgroundColor: {
             default: 'transparent',
@@ -179,12 +161,12 @@ export const checkbox = stylex.create({
         cursor: 'pointer',
         userSelect: 'none',
         verticalAlign: 'middle',
-        transitionProperty: 'background-color, border-width, outline-color, outline-width',
-        transitionDuration: baseValue.transitionDuration,
-        transitionTimingFunction: baseValue.transitionEasing,
+        transitionProperty: 'background-color, border-width, outline-color, outline-width, outline-offset',
+        transitionDuration: values.transitionDuration,
+        transitionTimingFunction: values.transitionEasing,
         boxShadow: {
             default: `0 0 0 0 ${radixScale.blackA3}`,
-            [where_checked]: `0 calc(${baseValue.lengthRelative} * 0.5) calc(${baseValue.lengthRelative} * 1) 0 ${radixScale.blackA3}`
+            [where_checked]: `0 0.5rem 1rem 0 ${radixScale.blackA3}`
         },
         opacity: {
             default: 1,
@@ -196,18 +178,18 @@ export const checkbox = stylex.create({
         }
     },
     sm: {
-        width: `calc(${baseValue.lengthRelative} * 4)`,
-        height: `calc(${baseValue.lengthRelative} * 4)`,
-        borderRadius: `calc(${baseValue.lengthRelative} * 0.5)`
+        width: `1rem`,
+        height: `1rem`,
+        borderRadius: `0.125rem`
     },
     md: {
-        width: `calc(${baseValue.lengthRelative} * 5)`,
-        height: `calc(${baseValue.lengthRelative} * 5)`,
-        borderRadius: `calc(${baseValue.lengthRelative} * 0.75)`
+        width: `1.25rem`,
+        height: `1.25rem`,
+        borderRadius: `0.25rem`
     },
     lg: {
-        width: `calc(${baseValue.lengthRelative} * 6)`,
-        height: `calc(${baseValue.lengthRelative} * 6)`,
-        borderRadius: `calc(${baseValue.lengthRelative} * 1.5)`
+        width: `1.5rem`,
+        height: `1.5rem`,
+        borderRadius: `0.3125rem`
     }
 });

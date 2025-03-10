@@ -1,11 +1,11 @@
 <script lang="ts" module>
     export const styles = stylex.create({
         controls: {
-            padding: `calc(${baseValue.lengthFixed} * 4)`,
+            padding: '8px',
             backgroundColor: radixSurface.color1,
             display: 'flex',
             flexDirection: 'row',
-            gap: `calc(${baseValue.lengthFixed} * 2)`,
+            gap: '8px',
             alignItems: 'center',
             color: radixSurface.color12
         },
@@ -33,7 +33,7 @@
 <script lang="ts">
     import { button } from '$lib/styles/buttons';
     import * as stylex from '@stylexjs/stylex';
-    import { baseValue } from '$lib/styles/values.stylex';
+    import { values } from '$lib/styles/values.stylex';
     import { checkbox, switches } from '$lib/styles/checkboxes';
     import { config } from '$lib/states.svelte';
     import { accentPrimary } from '$lib/styles/theme/schemes/accent/primary.stylex';
@@ -59,8 +59,8 @@
         height: stylex.firstThatWorks('100dvh', '100vh'),
         backgroundColor: radixSurface.color2,
         color: radixSurface.color12,
-        padding: `calc(${baseValue.lengthFixed} * 4)`,
-        gap: `calc(${baseValue.lengthFixed} * 4)`,
+        padding: `16px`,
+        gap: `16px`,
         display: 'flex',
         flexDirection: 'column'
     }}
