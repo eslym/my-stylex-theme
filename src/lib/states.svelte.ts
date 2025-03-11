@@ -11,6 +11,8 @@ let disabled = $state(false);
 
 let checked = $state(false);
 
+let radio = 1;
+
 export const config = {
     get accent() {
         return accent;
@@ -41,5 +43,11 @@ export const config = {
     },
     set checked(value: boolean) {
         checked = value;
+    },
+    get radio() {
+        return radio;
+    },
+    set radio(value: number) {
+        radio = value;
     }
 };
